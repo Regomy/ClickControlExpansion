@@ -1,5 +1,6 @@
 package me.rejomy.clickcontrol.data;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,16 +15,16 @@ public class PlayerData {
 
     @NotNull
     public final Object player;
-    public Object opponent;
 
-    /**
-     * Use this value only with opponent != null, because we dont delete opponentData when opponent is leave from the server.
-     */
-    public PlayerData opponentData;
+    @Getter
+    private PlayerData opponentData;
 
     public final List<Long> rightClicks = new ArrayList<>();
     public final List<Long> leftClicks = new ArrayList<>();
 
+    /**
+     * How much INTERACT_ENTITY packets player send without receive hit from his opponent.
+     */
     public int combo = 0;
 
     /**
@@ -31,6 +32,19 @@ public class PlayerData {
      *  and when player start to break block, he is send this animation.
      */
     public boolean digging;
+
+    /**
+     * Set opponent to new opponent and reset combo state if it is new opponent.
+     * @param data Opponent data.
+     */
+    public void setOpponent(PlayerData data) {
+        if (opponentData != data) {
+            // Reset combo value.
+            combo = 0;
+        }
+
+        opponentData = data;
+    }
 
     public int getLeftClicks() {
         filterClicks(leftClicks);

@@ -3,6 +3,7 @@ package me.rejomy.clickcontrol;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import me.rejomy.clickcontrol.data.PlayerData;
 import me.rejomy.clickcontrol.manager.DataManager;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -53,19 +54,23 @@ public class ClickControlExpansion extends PlaceholderExpansion {
             case "lcps_opponent" -> {
                 PlayerData data = dataManager.getById(entityId);
 
-                if (data.opponentData != null) {
-                    int cpsOpponent = data.opponentData.getLeftClicks();
+                if (data.getOpponentData() != null) {
+                    int cpsOpponent = data.getOpponentData().getLeftClicks();
                     return "" + cpsOpponent;
                 }
+
+                return "";
             }
 
             case "rcps_opponent" -> {
                 PlayerData data = dataManager.getById(entityId);
 
-                if (data.opponentData != null) {
-                    int cpsOpponent = data.opponentData.getRightClicks();
+                if (data.getOpponentData() != null) {
+                    int cpsOpponent = data.getOpponentData().getRightClicks();
                     return "" + cpsOpponent;
                 }
+
+                return "";
             }
         }
 
